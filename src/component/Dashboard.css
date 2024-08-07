@@ -1,0 +1,21 @@
+.dashboard {
+    display: flex;
+    height: 100vh;
+    overflow: hidden; /* Empêche le débordement si le contenu est trop grand */
+}
+
+.dashboard-container {
+    display: flex;
+    flex: 1;
+    margin-top: 60px;
+    
+}
+
+.dashboard-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #f0f2f5;
+    overflow-y: auto;
+    box-sizing: border-box; /* Assurez-vous que le padding est inclus dans la largeur */
+
+}
