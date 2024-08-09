@@ -11,8 +11,8 @@ const UserDashboard: React.FC = () => {
   return (
     <div className="dashboard">
       <Header />
-      <div className="dashboard-container">
         <Sidebar />
+        <div className="dashboard-container">
         <div className="dashboard-content">
           <h1>Welcome, {user?.firstname} {user?.lastname}</h1>
           <p>This is the User Dashboard.</p>

@@ -6,19 +6,20 @@ import { MdQuestionAnswer } from 'react-icons/md';
 import { FaAngleRight, FaUsers, FaTasks, FaListAlt } from 'react-icons/fa';
 import { GiTeacher } from 'react-icons/gi';
 import './Sidebar.css';
-import {RootState} from '../store/index';
+import { RootState } from '../store/index';
 
 const Sidebar: React.FC = () => {
-  const user = useSelector((state: RootState) => state.auth);
+  // Extract the user object directly from the Redux state
+  const { user } = useSelector((state: RootState) => state.auth);
   console.log('User:', user);
   console.log('User Role:', user?.role);
-  
+
   const [activeTab, setActiveTab] = useState<number | null>(null);
 
   const handleSubmenuClick = (tabIndex: number) => {
     setActiveTab(activeTab === tabIndex ? null : tabIndex);
   };
-  
+
   return (
     <div className="sidebar">
       {user && user.role === 'user' && (

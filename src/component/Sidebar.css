@@ -6,14 +6,15 @@
     overflow-y: auto;
     box-sizing: border-box;
     position: fixed; /* Garde la sidebar à gauche */
-    top: 60px; /* Commence sous le header */
+    top: 160px; /* Commence sous le header */
     left: 0;
-}
+  }
   
-.sidebar ul {
+  .sidebar ul {
     list-style: none;
     padding: 0;
-}
+  }
+  
   .sidebar li {
     margin-bottom: 10px;
   }
@@ -22,10 +23,28 @@
     text-decoration: none;
     color: #333;
     display: flex;
-    
   }
   
   .sidebar .icon {
     margin-right: 10px;
+  }
+  
+  @media (max-width: 768px) {
+    .sidebar {
+      width: 100%;
+      height: auto;
+      position: static;
+      top: auto;
+      left: auto;
+    }
+  
+    .sidebar ul {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  
+    .sidebar li {
+      flex: 1 1 50%; /* Deux éléments par ligne */
+    }
   }
   

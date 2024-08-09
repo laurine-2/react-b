@@ -21,7 +21,7 @@ export const loginUser = createAsyncThunk(
   async (userData: { email: string; password: string }, thunkAPI) => {
     try {
       const response = await axiosInstance.post('/login', userData);
-      console.log('API Response:', response.data);
+      // console.log('API Response:', response.data);
       const { token, user } = response.data; // Ensure user is extracted
       localStorage.setItem('token', token);
       return { token, user };
