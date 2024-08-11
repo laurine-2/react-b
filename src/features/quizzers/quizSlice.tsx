@@ -12,10 +12,36 @@ export const addQuiz = createAsyncThunk('quizzes/addQuiz', async (quizData) => {
   return response.data;
 });
 
+// Action pour supprimer un quiz
+export const deleteQuiz = createAsyncThunk('quizzes/deleteQuiz', async (quizId) => {
+  await axiosInstance.delete(`/quizzes/${quizId}`);
+  return quizId;
+});
+
+// Thunk pour récupérer les quiz par catégorie
+export const fetchQuizzesByCategory = createAsyncThunk(
+    'quizzes/fetchQuizzesByCategory',
+    async (categoryId) => {
+      const response = await axiosInstance.get(`/categories/${categoryId}/quizzes`);
+      return response.data;
+    }
+  );
+
+  // Thunk pour récupérer un quiz spécifique par ID
+export const fetchQuizById = createAsyncThunk(
+    'quizzes/fetchQuizById',
+    async (quizId) => {
+      const response = await axiosInstance.get(`/quizzes/${quizId}`);
+      return response.data;
+    }
+  );
+  
+
 const quizSlice = createSlice({
   name: 'quizzes',
   initialState: {
     quizzes: [],
+    selectedQuiz: null,  // Ajout d'un état pour un quiz spécifique
     status: 'idle',
     error: null,
   },
@@ -35,7 +61,33 @@ const quizSlice = createSlice({
       })
       .addCase(addQuiz.fulfilled, (state, action) => {
         state.quizzes.push(action.payload);
-      });
+      })
+      .addCase(deleteQuiz.fulfilled, (state, action) => {
+        state.quizzes = state.quizzes.filter((quiz) => quiz.id !== action.payload);
+      })
+      .addCase(fetchQuizzesByCategory.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchQuizzesByCategory.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.quizzes = action.payload;
+      })
+      .addCase(fetchQuizzesByCategory.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(fetchQuizById.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchQuizById.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.selectedQuiz = action.payload;  // Stocke le quiz récupéré
+      })
+      .addCase(fetchQuizById.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      ;
   },
 });
 

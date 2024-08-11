@@ -12,6 +12,11 @@ import CategoryForm from './features/categories/CategoryForm';
 import CategoryList from './features/categories/CategoryList';
 import QuizForm from './features/quizzers/QuizForm';
 import QuizList from './features/quizzers/QuizList';
+import QuestionList from './features/questions/QuestionList';
+import ResultList from './features/results/ResultList';
+import Profil from './component/Profil';
+import TakeQuiz from './features/quizzers/TakeQuiz';
+import QuizListByCategory from './features/QuizListByCategory';
 
 const App: React.FC = () => {
   return (
@@ -28,12 +33,22 @@ const App: React.FC = () => {
           <Route path="/user-dashboard" element={<UserDashboard />} />
           <Route path="/manager-dashboard" element={<ManagerDashboard />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/profil" element={<Profil />}/>
           {/* Manager Routes */}
           <Route path="/create-category" element={<CategoryForm />} />
           <Route path="/edit-category" element={<CategoryList />} />
           <Route path="/delete-category" element={<CategoryList />} />
-          <Route path="/create-quiz" element={<QuizForm />} />
+          <Route path="/quizzes/create" element={<QuizForm />} />
           <Route path="/quizzes/list" element={<QuizList />} />
+          <Route path="/question" element={<QuestionList />}/>
+          <Route path="/result" element={<ResultList />}/>
+
+          {/* user */}
+          <Route path="/categories" element={<CategoryList />} /> 
+          <Route path="/categories/:categoryId/quizzes" element={<QuizListByCategory />} />
+          <Route path="/quizzes/:quizId" element={<TakeQuiz />} />
+          <Route path="/quizzes" element={<QuizListByCategory />} /> 
+          <Route path="/results" element={<ResultList />}/>
           </Route>
         
       </Routes>

@@ -50,6 +50,19 @@ export const registerUser = createAsyncThunk(
   }
 );
 
+// Action pour mettre à jour le profil
+export const updateProfile = createAsyncThunk(
+  'auth/updateProfile',
+  async (profileData, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put('/profile', profileData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -85,6 +98,14 @@ const authSlice = createSlice({
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as { message: string };
+      })
+      //vue and update profil
+
+      .addCase(updateProfile.fulfilled, (state, action) => {
+        state.user = action.payload;
+      })
+      .addCase(updateProfile.rejected, (state, action) => {
+        state.error = action.payload;
       });
   },
 });

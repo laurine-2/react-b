@@ -25,9 +25,9 @@ const Sidebar: React.FC = () => {
       {user && user.role === 'user' && (
         <ul>
           <li>
-            <Link to="/profile">
+            <Link to="/profil">
               <span className="icon"><FaUsers /></span>
-              Voir/modifier le profil
+              profil
             </Link>
           </li>
           <li>
@@ -59,6 +59,12 @@ const Sidebar: React.FC = () => {
       {user && user.role === 'manager' && (
         <ul>
           <li>
+            <Link to="/profil">
+              <span className="icon"><FaUsers /></span>
+              profil
+            </Link>
+          </li>
+          <li>
             <Button
               className={`w-100 ${activeTab === 2 ? "active" : ""}`}
               onClick={() => handleSubmenuClick(2)}
@@ -79,21 +85,28 @@ const Sidebar: React.FC = () => {
           <li>
             <Link to="/create-category">
               <span className="icon"><FaListAlt /></span>
-              Créer une catégorie de quiz
+              Category
             </Link>
           </li>
           <li>
-            <Link to="/edit-category">
-              <span className="icon"><FaTasks /></span>
-              Éditer une catégorie de quiz
+            <Link to="/question">
+              <span className="icon"><FaListAlt /></span>
+              Question
             </Link>
           </li>
+          {/* <li>
+            <Link to="/answer">
+            <span className="icon"><FaListAlt/></span>
+            Answer 
+            </Link>
+          </li> */}
           <li>
-            <Link to="/delete-category">
-              <span className="icon"><FaTasks /></span>
-              Supprimer une catégorie de quiz
-            </Link>
-          </li>
+          <Link to="/user-answers">
+            <span className="icon"><FaListAlt /></span>
+            Voir les réponses des utilisateurs
+          </Link>
+        </li>
+
           <li>
             <Link to="/team-performance">
               <span className="icon"><FaUsers /></span>
@@ -105,9 +118,9 @@ const Sidebar: React.FC = () => {
       {user && user.role === 'admin' && (
         <ul>
           <li>
-            <Link to="/profile">
+            <Link to="/profil">
               <span className="icon"><FaUsers /></span>
-              Voir/modifier le profil
+              profil
             </Link>
           </li>
           <li>
