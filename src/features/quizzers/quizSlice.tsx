@@ -28,20 +28,19 @@ export const fetchQuizzesByCategory = createAsyncThunk(
   );
 
   // Thunk pour récupérer un quiz spécifique par ID
-export const fetchQuizById = createAsyncThunk(
-    'quizzes/fetchQuizById',
-    async (quizId) => {
-      const response = await axiosInstance.get(`/quizzes/${quizId}`);
-      return response.data;
-    }
-  );
+  export const fetchQuizById = createAsyncThunk('quizzes/fetchQuizById', async (quizId) => {
+    const response = await axiosInstance.get(`/quizzes/${quizId}/questions`);
+    return response.data; // Renvoie les questions avec les choix associés
+  });
+  
+
   
 
 const quizSlice = createSlice({
   name: 'quizzes',
   initialState: {
     quizzes: [],
-    selectedQuiz: null,  // Ajout d'un état pour un quiz spécifique
+    selectedQuiz: [],  // Ajout d'un état pour un quiz spécifique
     status: 'idle',
     error: null,
   },

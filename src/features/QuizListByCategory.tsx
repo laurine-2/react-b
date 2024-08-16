@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchQuizzesByCategory } from '../features/quizzers/quizSlice';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 const QuizListByCategory = () => {
   const { categoryId } = useParams(); // Récupère l'ID de la catégorie depuis l'URL
@@ -27,7 +27,9 @@ const QuizListByCategory = () => {
       <h2>Quizzes in Category</h2>
       <ul>
         {quizzes.map((quiz) => (
-          <li key={quiz.id}>{quiz.title}</li>
+          <li key={quiz.id}>
+            <Link to={`/quizzes/${quiz.id}/questions`}>{quiz.title}</Link> {/* Lien pour démarrer le quiz */}
+          </li>
         ))}
       </ul>
     </div>

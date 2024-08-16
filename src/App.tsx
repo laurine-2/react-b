@@ -48,6 +48,7 @@ const App: React.FC = () => {
           <Route path="/categories/:categoryId/quizzes" element={<QuizListByCategory />} />
           <Route path="/quizzes/:quizId" element={<TakeQuiz />} />
           <Route path="/quizzes" element={<QuizListByCategory />} /> 
+          <Route path="/quizzes/:quizId/questions" element={<TakeQuiz />} />
           <Route path="/results" element={<ResultList />}/>
           </Route>
         

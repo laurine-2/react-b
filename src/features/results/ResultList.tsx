@@ -1,54 +1,25 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchResults } from './resultSlice';
-import { Table } from 'react-bootstrap';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
-const ResultList = () => {
-  const dispatch = useDispatch();
-  const results = useSelector((state) => state.results.results); // Récupère les résultats depuis le store
-  const status = useSelector((state) => state.results.status); // Statut du chargement
-  const error = useSelector((state) => state.results.error); // Erreurs éventuelles
+const ResultPage = () => {
+  const results = useSelector((state) => state.results.results); // Récupère les résultats
+  const user = useSelector((state) => state.auth.user); // Récupère l'utilisateur connecté
 
-  useEffect(() => {
-    if (status === 'idle') {
-      dispatch(fetchResults()); // Charge les résultats si le statut est 'idle'
-    }
-  }, [status, dispatch]);
-
-  if (status === 'loading') {
-    return <div>Loading...</div>; // Affiche un message de chargement si les résultats sont en cours de récupération
-  }
-
-  if (status === 'failed') {
-    return <div>Error: {error}</div>; // Affiche un message d'erreur si la récupération des résultats a échoué
-  }
+  const userResult = results.find(result => result.user_id === user.id); // Récupère le résultat de l'utilisateur
 
   return (
     <div className="container mt-5">
-      <Table striped bordered hover className="mt-3">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>User ID</th>
-            <th>Quiz ID</th>
-            <th>Score</th>
-            <th>Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {results.map((result) => (
-            <tr key={result.id}>
-              <td>{result.id}</td>
-              <td>{result.user_id}</td>
-              <td>{result.quiz_id}</td>
-              <td>{result.score}</td>
-              <td>{new Date(result.created_at).toLocaleDateString()}</td> {/* Formatte la date */}
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+      <h2>Résultat du Quiz</h2>
+      {userResult ? (
+        <div>
+          <p>Score: {userResult.score}%</p>
+          <p>Félicitations! Vous avez terminé le quiz.</p>
+        </div>
+      ) : (
+        <p>Pas de résultats disponibles.</p>
+      )}
     </div>
   );
 };
 
-export default ResultList;
+export default ResultPage;

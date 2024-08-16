@@ -38,10 +38,14 @@ const QuestionForm = ({ show, handleClose, editMode = false, existingQuestion = 
   const handleSubmit = (e) => {
     e.preventDefault();
     const questionData = { content, quiz_id: quizId, choices };
+
+    console.log("Quiz ID:", quizId); // Loguez les valeurs pour déboguer
+  console.log("Question Data:", questionData);
+
     if (editMode) {
       dispatch(updateQuestion({ id: existingQuestion.id, questionData }));
     } else {
-      dispatch(addQuestion(questionData));
+      dispatch(addQuestion({ quizId, questionData }));
     }
     handleClose();
   };

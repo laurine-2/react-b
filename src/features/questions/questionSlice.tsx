@@ -7,8 +7,15 @@ export const fetchQuestions = createAsyncThunk('questions/fetchQuestions', async
   return response.data;
 });
 
-export const addQuestion = createAsyncThunk('questions/addQuestion', async (questionData) => {
-  const response = await axiosInstance.post('/questions', questionData);
+// export const addQuestion = createAsyncThunk('questions/addQuestion', async (questionData) => {
+//   const response = await axiosInstance.post('/questions', questionData);
+//   return response.data;
+// });
+
+// Action pour ajouter une question à un quiz spécifique
+export const addQuestion = createAsyncThunk('questions/addQuestion', async ({ quizId, questionData }) => {
+  // Assurez-vous d'utiliser des backticks ici
+  const response = await axiosInstance.post(`/quizzes/${quizId}/questions`, questionData);
   return response.data;
 });
 

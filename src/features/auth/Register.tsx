@@ -85,7 +85,13 @@ const Register: React.FC = () => {
           {loading ? 'Loading...' : 'Register'}
         </button>
         {error && <p>{error}</p>}
+
+       
       </form>
+      <div>
+          <h3>are you have the acounte!</h3>
+          <button onClick={() => navigate('/login')}> Login</button>
+        </div>
     </div>
   );
 };
