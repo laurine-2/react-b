@@ -9,7 +9,11 @@ const TakeQuiz = () => {
   const { quizId } = useParams(); // Récupère l'ID du quiz depuis l'URL
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // Récupérer l'utilisateur depuis Redux
+  const user = useSelector((state) => state.auth.user); // Assurez-vous que l'utilisateur est bien défini
   const quiz = useSelector((state) => state.quizzes.selectedQuiz); // Récupère les questions du quiz sous forme de tableau
+  
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Index de la question actuelle
   const [selectedAnswer, setSelectedAnswer] = useState(null); // Réponse sélectionnée
 
@@ -17,6 +21,7 @@ const TakeQuiz = () => {
     dispatch(fetchQuizById(quizId)); // Charge les questions du quiz sélectionné
   }, [dispatch, quizId]);
 
+  console.log('User:', user);
   // Vérifiez que le quiz est bien un tableau et qu'il a des questions
   if (!quiz || quiz.length === 0) {
     return <div>Loading...</div>;
@@ -30,11 +35,21 @@ const TakeQuiz = () => {
       return;
     }
 
-    dispatch(addUserAnswer({
-      user_id: quiz.user_id, // Assurez-vous que user_id est défini quelque part
+    // Vérifiez que l'utilisateur est connecté et que l'identifiant est disponible
+    if (!user || !user.id) {
+      console.error("User is not logged in or user_id is missing");
+      return;
+    }
+
+    const answerData = {
+      user_id: user.id,  // Assurez-vous que user.id est défini
       question_id: currentQuestion.id,
-      answer_id: selectedAnswer,
-    }));
+      choice_id: selectedAnswer,
+    };
+
+    console.log('Answer Data:', answerData); // Vérifiez les données avant l'envoi
+
+    dispatch(addUserAnswer(answerData));
 
     if (currentQuestionIndex < quiz.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);

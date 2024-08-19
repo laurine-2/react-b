@@ -31,7 +31,7 @@ const UserAnswerList = () => {
             <th>ID</th>
             <th>User ID</th>
             <th>Question ID</th>
-            <th>Answer ID</th>
+            <th>Choice ID</th>
             <th>Date</th>
           </tr>
         </thead>
@@ -41,7 +41,7 @@ const UserAnswerList = () => {
               <td>{userAnswer.id}</td>
               <td>{userAnswer.user_id}</td>
               <td>{userAnswer.question_id}</td>
-              <td>{userAnswer.answer_id}</td>
+              <td>{userAnswer.choice_id}</td>
               <td>{new Date(userAnswer.created_at).toLocaleDateString()}</td> {/* Formatte la date */}
             </tr>
           ))}

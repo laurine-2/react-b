@@ -10,7 +10,13 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  user: null,
+  user: {
+    id: null, // Ajoutez `id` ici
+    firstname: '',
+    lastname: '',
+    username: '',
+    role: '',
+  },
   token: null,
   loading: false,
   error: null,
@@ -18,19 +24,20 @@ const initialState: AuthState = {
 
 export const loginUser = createAsyncThunk(
   'auth/loginUser',
-  async (userData: { email: string; password: string }, thunkAPI) => {
+  async (userData, thunkAPI) => {
     try {
       const response = await axiosInstance.post('/login', userData);
-      // console.log('API Response:', response.data);
-      const { token, user } = response.data; // Ensure user is extracted
+      const { token, user } = response.data;
+      // Assurez-vous que l'API renvoie bien un `id` pour l'utilisateur
+      console.log('User Data:', user); // Vérifiez si l'utilisateur a un `id`
       localStorage.setItem('token', token);
       return { token, user };
-    } catch (error: any) {
-      console.error('Login Error:', error.response.data.message);
+    } catch (error) {
       return thunkAPI.rejectWithValue({ message: error.response.data.message });
     }
   }
 );
+
 
 
 export const registerUser = createAsyncThunk(

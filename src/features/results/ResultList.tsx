@@ -1,20 +1,36 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { fetchResults } from './resultSlice';
 
-const ResultPage = () => {
-  const results = useSelector((state) => state.results.results); // Récupère les résultats
-  const user = useSelector((state) => state.auth.user); // Récupère l'utilisateur connecté
+const ResultList = () => {
+  const dispatch = useDispatch();
+  const results = useSelector((state) => state.results.results); // Récupère les résultats depuis Redux
+  const status = useSelector((state) => state.results.status); // Statut du chargement
+  const error = useSelector((state) => state.results.error); // Erreurs éventuelles
 
-  const userResult = results.find(result => result.user_id === user.id); // Récupère le résultat de l'utilisateur
+  useEffect(() => {
+    dispatch(fetchResults()); // Charge les résultats
+  }, [dispatch]);
+
+  console.log('Results:', results);
+
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
+
+  if (status === 'failed') {
+    return <div>Error: {error}</div>;
+  }
 
   return (
-    <div className="container mt-5">
-      <h2>Résultat du Quiz</h2>
-      {userResult ? (
-        <div>
-          <p>Score: {userResult.score}%</p>
-          <p>Félicitations! Vous avez terminé le quiz.</p>
-        </div>
+    <div>
+      {results.length > 0 ? (
+        results.map(result => (
+          <div key={result.id}>
+             <p>Quiz: {result.quiz.title}, Score: {result.score}%</p>
+          </div>
+        ))
       ) : (
         <p>Pas de résultats disponibles.</p>
       )}
@@ -22,4 +38,4 @@ const ResultPage = () => {
   );
 };
 
-export default ResultPage;
+export default ResultList;

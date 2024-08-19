@@ -1,13 +1,13 @@
 import React from 'react';
-import Home from '../src/component/Home'
+import Home from './component/Home'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from '../src/features/auth/Login';
-import Register from '../src/features/auth/Register';
-import Logout from '../src/features/auth/Logout';
+import Login from './features/auth/Login';
+import Register from './features/auth/Register';
+import Logout from './features/auth/Logout';
 import UserDashboard from './component/UserDashboard';
 import ManagerDashboard from './component/ManagerDashboard';
 import AdminDashboard from './component/AdminDashboard';
-import PrivateRoute from '../src/component/PrivateRoute';
+import PrivateRoute from './component/PrivateRoute';
 import CategoryForm from './features/categories/CategoryForm';
 import CategoryList from './features/categories/CategoryList';
 import QuizForm from './features/quizzers/QuizForm';
@@ -38,7 +38,7 @@ const App: React.FC = () => {
           <Route path="/create-category" element={<CategoryForm />} />
           <Route path="/edit-category" element={<CategoryList />} />
           <Route path="/delete-category" element={<CategoryList />} />
-          <Route path="/quizzes/create" element={<QuizForm />} />
+          {/* <Route path="/quizzes/create" element={<QuizForm />} /> */}
           <Route path="/quizzes/list" element={<QuizList />} />
           <Route path="/question" element={<QuestionList />}/>
           <Route path="/result" element={<ResultList />}/>
