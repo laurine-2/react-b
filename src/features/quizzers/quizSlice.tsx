@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '../../api/axios';
 
 // Thunks pour les opérations asynchrones
-export const fetchQuizzes = createAsyncThunk('quizzes/fetchQuizzes', async () => {
-  const response = await axiosInstance.get('/quizzes');
+export const fetchQuizzes = createAsyncThunk('quizzes/fetchQuizzes', async (quizId) => {
+  const response = await axiosInstance.get('/quizzes/${quizId}');
   return response.data;
 });
 

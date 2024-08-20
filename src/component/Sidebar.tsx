@@ -77,7 +77,7 @@ const Sidebar: React.FC = () => {
               <div className="submenuWrapper">
                 <ul className="submenu">
                   <li><Link to="/quizzes/list">Quiz List</Link></li>
-                  <li><Link to="/quizzes/create">Create Quiz</Link></li>
+                  {/* <li><Link to="/quizzes/create">Create Quiz</Link></li> */}
                 </ul>
               </div>
             )}

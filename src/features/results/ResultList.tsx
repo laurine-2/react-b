@@ -21,7 +21,7 @@ const ResultList = () => {
 
   if (status === 'failed') {
     return <div>Error: {error}</div>;
-  }
+  } 
 
   return (
     <div>

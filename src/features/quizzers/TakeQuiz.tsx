@@ -1,65 +1,67 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchQuizById } from './quizSlice';
-import { addUserAnswer } from '../userAnswer/userAnswerSlice';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
+import axiosInstance from '../../api/axios'; // Importez votre instance axios
 
 const TakeQuiz = () => {
-  const { quizId } = useParams(); // Récupère l'ID du quiz depuis l'URL
+  const { quizId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // Récupérer l'utilisateur depuis Redux
-  const user = useSelector((state) => state.auth.user); // Assurez-vous que l'utilisateur est bien défini
-  const quiz = useSelector((state) => state.quizzes.selectedQuiz); // Récupère les questions du quiz sous forme de tableau
-  
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Index de la question actuelle
-  const [selectedAnswer, setSelectedAnswer] = useState(null); // Réponse sélectionnée
+  const user = useSelector((state) => state.auth.user);
+  const quiz = useSelector((state) => state.quizzes.selectedQuiz);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [answers, setAnswers] = useState([]); // Stocke toutes les réponses
 
   useEffect(() => {
-    dispatch(fetchQuizById(quizId)); // Charge les questions du quiz sélectionné
+    dispatch(fetchQuizById(quizId));
   }, [dispatch, quizId]);
 
-  console.log('User:', user);
-  // Vérifiez que le quiz est bien un tableau et qu'il a des questions
   if (!quiz || quiz.length === 0) {
     return <div>Loading...</div>;
   }
 
   const handleAnswerSubmit = () => {
-    const currentQuestion = quiz[currentQuestionIndex]; // Prend la question actuelle
-    
+    const currentQuestion = quiz[currentQuestionIndex];
+
     if (!selectedAnswer) {
       console.error("No answer selected");
       return;
     }
 
-    // Vérifiez que l'utilisateur est connecté et que l'identifiant est disponible
     if (!user || !user.id) {
       console.error("User is not logged in or user_id is missing");
       return;
     }
 
-    const answerData = {
-      user_id: user.id,  // Assurez-vous que user.id est défini
-      question_id: currentQuestion.id,
-      choice_id: selectedAnswer,
-    };
-
-    console.log('Answer Data:', answerData); // Vérifiez les données avant l'envoi
-
-    dispatch(addUserAnswer(answerData));
+    // Ajoutez la réponse à la liste des réponses
+    setAnswers((prevAnswers) => [
+      ...prevAnswers,
+      {
+        question_id: currentQuestion.id,
+        choice_id: selectedAnswer,
+      },
+    ]);
 
     if (currentQuestionIndex < quiz.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setSelectedAnswer(null);
     } else {
-      navigate('/results'); // Redirige vers la page des résultats
+      // Soumettez toutes les réponses à la fin du quiz
+      axiosInstance.post(`/quizzes/${quizId}/submit`, { answers })
+        .then(response => {
+          console.log('Quiz submitted successfully:', response.data);
+          navigate('/results');
+        })
+        .catch(error => {
+          console.error('Error submitting quiz:', error);
+        });
     }
   };
 
-  const currentQuestion = quiz[currentQuestionIndex]; // Récupère la question actuelle
+  const currentQuestion = quiz[currentQuestionIndex];
 
   return (
     <div className="container mt-5">
@@ -77,7 +79,7 @@ const TakeQuiz = () => {
         ))}
       </Form>
       <Button variant="primary" className="mt-3" onClick={handleAnswerSubmit}>
-        Suivant
+        {currentQuestionIndex < quiz.length - 1 ? 'Suivant' : 'Soumettre'}
       </Button>
     </div>
   );
