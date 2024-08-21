@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../../features/auth/authSlice';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../../features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
+import "../../Styles/Login.css";
+import logo from "../../assets/image/logo2.jpeg";
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading, error, user } = useSelector((state) => state.auth);
@@ -14,14 +16,14 @@ const Login: React.FC = () => {
   useEffect(() => {
     if (user && user.role) {
       switch (user.role) {
-        case 'admin':
-          navigate('/admin-dashboard');
+        case "admin":
+          navigate("/admin-dashboard");
           break;
-        case 'manager':
-          navigate('/manager-dashboard');
+        case "manager":
+          navigate("/manager-dashboard");
           break;
         default:
-          navigate('/user-dashboard');
+          navigate("/user-dashboard");
       }
     }
   }, [user, navigate]);
@@ -32,32 +34,48 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input 
-            type="email" 
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)} 
-            required 
-          />
+    <div className="global">
+      <div className="contained">
+        <h2>
+          <img src={logo} alt="" />
+        </h2>
+        <form onSubmit={handleSubmit}>
+          <div className="element">
+            <label>Email:</label>
+            <input
+              placeholder="Entrer vote email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="element">
+            <label>Password:</label>
+            <input
+              placeholder="Entrer votre mot de passe"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" disabled={loading}>
+            {loading ? "Loading..." : "Login"}
+          </button>
+          {error && <p>{error.message}</p>}
+        </form>
+        <div className="info">
+          <span>Mot de passe oublié ? </span>
         </div>
-        <div>
-          <label>Password:</label>
-          <input 
-            type="password" 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
-            required 
-          />
+
+        <div className="lien">
+          <span className="goConnect">
+            Vous n'avez pas encore de compte?
+            <p onClick={() => navigate("/register")}> SignUp</p>
+          </span>
         </div>
-        <button type="submit" disabled={loading}>
-          {loading ? 'Loading...' : 'Login'}
-        </button>
-        {error && <p>{error.message}</p>}
-      </form>
+      </div>
     </div>
   );
 };

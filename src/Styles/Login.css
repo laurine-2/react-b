@@ -1,0 +1,111 @@
+.global {
+  font-family: Arial, Helvetica, sans-serif;
+  height: 100vh;
+  width: 98.5vw;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.connect {
+  font-family: Arial, Helvetica, sans-serif;
+  width: 98.5vw;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.contained {
+  box-shadow: 1px 0px 5px 0px black;
+  margin: auto;
+  background-color: white;
+  width: 400px;
+  /* height: 80%; */
+  padding-bottom: 20px;
+  border-radius: 10px;
+}
+
+.signup {
+  width: 500px !important;
+  margin-top: 20px !important;
+  margin-bottom: 20px;
+}
+
+.signup button {
+  width: 83% !important;
+}
+
+.signup input,
+select {
+  width: 90% !important;
+}
+
+.contained h2 {
+  text-align: center;
+  background-color: #800080;
+  color: white;
+  border-radius: 10px 10px 0px 0px;
+  padding: 10px;
+}
+.contained h2 img {
+  width: 60px;
+  border-radius: 100%;
+}
+
+.element {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 15px;
+  margin-left: 45px;
+}
+
+.element input,
+select {
+  width: 80%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid rgb(82, 88, 88);
+}
+
+.element label {
+  font-weight: 500;
+}
+
+.contained button {
+  border: none;
+  width: 73%;
+  padding: 10px;
+  margin-left: 40px;
+  border-radius: 5px;
+  background-color: #800080;
+  /* background-color:  rgb(3, 94, 94); */
+  color: white;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.info {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: center;
+}
+
+.lien {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.lien .goConnect {
+  display: flex;
+  gap: 10px;
+}
+
+.lien .goConnect p {
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
+}
