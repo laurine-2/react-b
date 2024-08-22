@@ -1,7 +1,9 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { fetchResults } from './resultSlice';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchResults } from "./resultSlice";
+import Header from "../../component/Header";
+import Sidebar from "../../component/Sidebar";
 
 const ResultList = () => {
   const dispatch = useDispatch();
@@ -10,30 +12,36 @@ const ResultList = () => {
   const error = useSelector((state) => state.results.error); // Erreurs éventuelles
 
   useEffect(() => {
-    dispatch(fetchResults()); // Charge les résultats
+    dispatch(fetchResults());
   }, [dispatch]);
 
-  console.log('Results:', results);
+  console.log("Results:", results);
 
-  if (status === 'loading') {
+  if (status === "loading") {
     return <div>Loading...</div>;
   }
 
-  if (status === 'failed') {
+  if (status === "failed") {
     return <div>Error: {error}</div>;
-  } 
+  }
 
   return (
     <div>
-      {results.length > 0 ? (
-        results.map(result => (
-          <div key={result.id}>
-             <p>Quiz: {result.quiz.title}, Score: {result.score}%</p>
-          </div>
-        ))
-      ) : (
-        <p>Pas de résultats disponibles.</p>
-      )}
+      <Header />
+      <Sidebar />
+      <div className="dashboard">
+        {results.length > 0 ? (
+          results.map((result) => (
+            <div key={result.id}>
+              <p>
+                Quiz: {result.quiz.title}, Score: {result.score}%
+              </p>
+            </div>
+          ))
+        ) : (
+          <p>Pas de résultats disponibles.</p>
+        )}
+      </div>
     </div>
   );
 };
