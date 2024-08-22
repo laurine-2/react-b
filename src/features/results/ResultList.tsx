@@ -11,9 +11,9 @@ const ResultList = () => {
   const status = useSelector((state) => state.results.status); // Statut du chargement
   const error = useSelector((state) => state.results.error); // Erreurs éventuelles
 
-  useEffect(() => {
-    dispatch(fetchResults());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchResults());
+  // }, [dispatch]);
 
   console.log("Results:", results);
 

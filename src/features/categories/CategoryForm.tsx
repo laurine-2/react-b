@@ -14,9 +14,9 @@ const CategoryForm = () => {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categories.categories);
 
-  useEffect(() => {
-    dispatch(fetchCategories());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchCategories());
+  // }, [dispatch]);
 
   const handleClose = () => {
     setShow(false);
