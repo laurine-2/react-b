@@ -38,7 +38,7 @@ const App: React.FC = () => {
           <Route path="/create-category" element={<CategoryForm />} />
           <Route path="/edit-category" element={<CategoryList />} />
           <Route path="/delete-category" element={<CategoryList />} />
-          {/* <Route path="/quizzes/create" element={<QuizForm />} /> */}
+          <Route path="/quizzes/create" element={<QuizForm show={undefined} handleClose={undefined} />} />
           <Route path="/quizzes/list" element={<QuizList />} />
           <Route path="/question" element={<QuestionList />}/>
           <Route path="/result" element={<ResultList />}/>

@@ -120,25 +120,26 @@ const CategoryForm = () => {
           </tr>
         </thead>
         <tbody>
-          {categories.map((category) => (
-            <tr key={category.id}>
-              <td>{category.id}</td>
-              <td>{category.name}</td>
-              <td>{category.description}</td>
-              <td>
-                <Button variant="info" className="me-2" onClick={() => handleViewCategory(category)}>
-                  <FontAwesomeIcon icon={faEye} />
-                </Button>
-                <Button variant="warning" className="me-2" onClick={() => handleEditCategory(category)}>
-                  <FontAwesomeIcon icon={faEdit} />
-                </Button>
-                <Button variant="danger" onClick={() => handleDeleteCategory(category.id)}>
-                  <FontAwesomeIcon icon={faTrash} />
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+  {Array.isArray(categories) && categories.map((category) => (
+    <tr key={category.id}>
+      <td>{category.id}</td>
+      <td>{category.name}</td>
+      <td>{category.description}</td>
+      <td>
+        <Button variant="info" className="me-2" onClick={() => handleViewCategory(category)}>
+          <FontAwesomeIcon icon={faEye} />
+        </Button>
+        <Button variant="warning" className="me-2" onClick={() => handleEditCategory(category)}>
+          <FontAwesomeIcon icon={faEdit} />
+        </Button>
+        <Button variant="danger" onClick={() => handleDeleteCategory(category.id)}>
+          <FontAwesomeIcon icon={faTrash} />
+        </Button>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
       </Table>
     </div>
   );

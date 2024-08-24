@@ -17,6 +17,8 @@ const QuizForm = ({ show, handleClose }) => {
     dispatch(fetchCategories()); // Charger les catégories lors du montage du composant
   }, [dispatch]);
 
+  console.log("Categories in form:", categories); // Vérifiez les données ici
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(addQuiz({ title, description, category_id: categoryId }));
@@ -55,21 +57,21 @@ const QuizForm = ({ show, handleClose }) => {
           </Form.Group>
 
           <Form.Group controlId="formCategoryId" className="mt-3">
-            <Form.Label>Category</Form.Label>
-            <Form.Control
-              as="select"
-              value={categoryId}
-              onChange={(e) => setCategoryId(e.target.value)}
-              required
-            >
-              <option value="">Select a category</option>
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </Form.Control>
-          </Form.Group>
+  <Form.Label>Category</Form.Label>
+  <Form.Control
+    as="select"
+    value={categoryId}
+    onChange={(e) => setCategoryId(e.target.value)}
+    required
+  >
+    <option value="">Select a category</option>
+    {Array.isArray(categories) && categories.map((category) => (
+      <option key={category.id} value={category.id}>
+        {category.name}
+      </option>
+    ))}
+  </Form.Control>
+</Form.Group>
 
           <Button variant="primary" type="submit" className="mt-3">
             Save Changes

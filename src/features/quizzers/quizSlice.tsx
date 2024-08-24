@@ -2,10 +2,12 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '../../api/axios';
 
 // Thunks pour les opérations asynchrones
-export const fetchQuizzes = createAsyncThunk('quizzes/fetchQuizzes', async (quizId) => {
-  const response = await axiosInstance.get('/quizzes/${quizId}');
+export const fetchQuizzes = createAsyncThunk('quizzes/fetchQuizzes', async () => {
+  const response = await axiosInstance.get('/quizzes');
   return response.data;
 });
+
+
 
 export const addQuiz = createAsyncThunk('quizzes/addQuiz', async (quizData) => {
   const response = await axiosInstance.post('/quizzes', quizData);
@@ -52,7 +54,7 @@ const quizSlice = createSlice({
       })
       .addCase(fetchQuizzes.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.quizzes = action.payload;
+        state.quizzes = Array.isArray(action.payload) ? action.payload : []; // Stockez les quizzes dans l'état
       })
       .addCase(fetchQuizzes.rejected, (state, action) => {
         state.status = 'failed';

@@ -40,14 +40,16 @@ const categorySlice = createSlice({
       })
       .addCase(fetchCategories.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.categories = action.payload;
+        state.categories = Array.isArray(action.payload) ? action.payload : []; // Vérifiez que c'est un tableau
       })
       .addCase(fetchCategories.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       })
       .addCase(addCategory.fulfilled, (state, action) => {
-        state.categories.push(action.payload);
+        if (Array.isArray(state.categories)) {
+          state.categories.push(action.payload); // Assurez-vous que `categories` est un tableau avant de pousser
+        }
       })
       .addCase(updateCategory.fulfilled, (state, action) => {
         const index = state.categories.findIndex((category) => category.id === action.payload.id);
@@ -62,4 +64,5 @@ const categorySlice = createSlice({
 });
 
 export default categorySlice.reducer;
+
 // export { deleteCategory };
