@@ -124,39 +124,49 @@ const Sidebar: React.FC = () => {
             </Link>
           </li>
           <li>
-            <Link to="/manage-users">
+            <Link to="/teams">
               <span className="icon"><FaUsers /></span>
-              Gérer les utilisateurs
+              Create team
             </Link>
           </li>
           <li>
+            <Link to="/users">
+              <span className="icon"><FaUsers /></span>
+              user
+            </Link>
+          </li>
+          {/* <li>
             <Link to="/manage-managers">
               <span className="icon"><FaUsers /></span>
-              Gérer les gestionnaires
+              manager
             </Link>
           </li>
           <li>
             <Link to="/manage-admins">
               <span className="icon"><FaUsers /></span>
-              Gérer les administrateurs
+              admin
             </Link>
-          </li>
+          </li> */}
+
+          {/* <li>
+            <Link to="/create-category">
+              <span className="icon"><FaListAlt /></span>
+              Category
+            </Link>
+          </li> */}
+
           <li>
             <Link to="/manage-categories">
               <span className="icon"><FaListAlt /></span>
-              Gérer toutes les catégories de quiz
+              manager category de quiz
             </Link>
           </li>
-          <li>
-            <Link to="/manage-quizzes">
-              <span className="icon"><MdQuestionAnswer /></span>
-              Gérer tous les quiz
-            </Link>
-          </li>
+          
+          
           <li>
             <Link to="/site-performance">
               <span className="icon"><FaTasks /></span>
-              Voir l'ensemble des performances sur le site
+              site perform
             </Link>
           </li>
         </ul>

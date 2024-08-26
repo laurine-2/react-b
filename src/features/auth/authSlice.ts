@@ -42,20 +42,20 @@ export const loginUser = createAsyncThunk(
 
 export const registerUser = createAsyncThunk(
   'auth/registerUser',
-  async (
-    userData: { firstname: string; lastname: string; matricule: string; email: string; password: string; role: string },
-    thunkAPI
-  ) => {
+  async (userData, thunkAPI) => {
     try {
       const response = await axiosInstance.post('/register', userData);
       const { token, user } = response.data;
       localStorage.setItem('token', token);
       return { token, user };
     } catch (error: any) {
+      console.error("Registration error:", error.response.data); // Affichez tous les détails de l'erreur
       return thunkAPI.rejectWithValue({ message: error.response.data.message });
     }
   }
 );
+
+
 
 // Action pour mettre à jour le profil
 export const updateProfile = createAsyncThunk(

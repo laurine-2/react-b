@@ -17,6 +17,8 @@ import ResultList from './features/results/ResultList';
 import Profil from './component/Profil';
 import TakeQuiz from './features/quizzers/TakeQuiz';
 import QuizListByCategory from './features/QuizListByCategory';
+import TeamList from './features/teams/TeamList';
+import UserList from './features/users/UserList';
 
 const App: React.FC = () => {
   return (
@@ -51,6 +53,10 @@ const App: React.FC = () => {
           <Route path="/quizzes/:quizId/questions" element={<TakeQuiz />} />
           <Route path="/results" element={<ResultList />}/>
           </Route>
+
+          {/* admin */}
+          <Route path="/teams" element={<TeamList />} />
+          <Route path="/users" element={<UserList />} />
         
       </Routes>
     

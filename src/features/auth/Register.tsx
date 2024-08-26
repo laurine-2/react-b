@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../../features/auth/authSlice';
+import { fetchTeams } from '../../features/teams/teamSlice';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../../store';
 
@@ -12,24 +13,35 @@ const Register: React.FC = () => {
     email: '',
     password: '',
     confirmPassword: '',
-    role: 'user'
+    team_id: '',
   });
+
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading, error } = useSelector((state: RootState) => state.auth);
+  const teams = useSelector((state: RootState) => state.teams.teams);
+
+  useEffect(() => {
+    dispatch(fetchTeams()); // Charger les équipes lors du montage du composant
+  }, [dispatch]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-
-    // Vérifiez si les mots de passe correspondent
-    if (e.target.name === 'password' || e.target.name === 'confirmPassword') {
-      setPasswordsMatch(formData.password === formData.confirmPassword);
+    const { name, value } = e.target;
+  
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  
+    // Vérifiez si les mots de passe correspondent en utilisant la valeur actuelle de l'événement
+    if (name === 'password' || name === 'confirmPassword') {
+      setPasswordsMatch(
+        name === 'password' ? value === formData.confirmPassword : formData.password === value
+      );
     }
   };
+  
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,13 +49,17 @@ const Register: React.FC = () => {
       setPasswordsMatch(false);
       return;
     }
-
+  
     const { confirmPassword, ...userData } = formData;
+  
+    // Affichez les données envoyées dans la console
+    console.log("Sending user data:", userData);
+  
     dispatch(registerUser(userData)).then(() => {
-      navigate('/user-dashboard');
+      navigate('/login');
     });
   };
-
+  
   return (
     <div>
       <h2>Register</h2>
@@ -73,25 +89,29 @@ const Register: React.FC = () => {
           <input type="password" name="confirmPassword" onChange={handleChange} required />
         </div>
         {!passwordsMatch && <p>Passwords do not match</p>}
+        
+        {/* Sélection de l'équipe */}
         <div>
-          <label>Role:</label>
-          <select name="role" onChange={handleChange} required>
-            <option value="user">User</option>
-            <option value="manager">Manager</option>
-            <option value="admin">Admin</option>
+          <label>Team:</label>
+          <select name="team_id" onChange={handleChange} required>
+            <option value="">Select a team</option>
+            {teams.map((team) => (
+              <option key={team.id} value={team.id}>
+                {team.name}
+              </option>
+            ))}
           </select>
         </div>
+        
         <button type="submit" disabled={loading || !passwordsMatch}>
           {loading ? 'Loading...' : 'Register'}
         </button>
         {error && <p>{error}</p>}
-
-       
       </form>
       <div>
-          <h3>are you have the acounte!</h3>
-          <button onClick={() => navigate('/login')}> Login</button>
-        </div>
+        <h3>Already have an account?</h3>
+        <button onClick={() => navigate('/login')}>Login</button>
+      </div>
     </div>
   );
 };
