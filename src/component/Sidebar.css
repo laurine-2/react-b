@@ -1,50 +1,71 @@
 .sidebar {
-    width: 250px;
-    background-color: #f8f9fa;
-    padding: 20px;
-    height: calc(100vh - 60px); /* Ajuste la hauteur pour qu'elle prenne toute la page moins le header */
-    overflow-y: auto;
-    box-sizing: border-box;
-    position: fixed; /* Garde la sidebar à gauche */
-    top: 160px; /* Commence sous le header */
-    left: 0;
+  color: white !important;
+  width: 250px;
+  height: 100vh;
+  background-color: #032343;
+  /* background-color: #0d3c6b; */
+  padding: 20px;
+  box-sizing: border-box;
+  margin-top: 0%;
+}
+
+.sidebar ul {
+  color: white !important;
+  list-style: none;
+  padding: 0;
+  padding-top: 32%;
+  width: 250px;
+  margin-left: -21px;
+}
+
+.sidebar li {
+  color: white !important;
+  margin-bottom: 20px;
+}
+
+.sidebar a {
+  color: white !important;
+  text-decoration: none;
+  color: #333;
+  display: flex;
+}
+
+.sidebar .icon {
+  color: white !important;
+  margin-right: 10px;
+}
+
+/* body.dark .sidebar ul li button.active {
+  background: rgba(225, 225, 225, 0.1) !important;
+} */
+
+.sidebar ul li button.active .icon svg {
+  color: #0858f7 !important ;
+}
+
+.sidebar ul li button.active .arrow {
+  transform: rotate(90deg);
+}
+
+.sidebar ul li button.active {
+  background: #f1f1f1 !important;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: static;
+    top: auto;
+    left: auto;
   }
-  
+
   .sidebar ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .sidebar li {
-    margin-bottom: 10px;
-  }
-  
-  .sidebar a {
-    text-decoration: none;
-    color: #333;
     display: flex;
+    flex-wrap: wrap;
   }
-  
-  .sidebar .icon {
-    margin-right: 10px;
+
+  .sidebar li {
+    flex: 1 1 50%; /* Deux éléments par ligne */
   }
-  
-  @media (max-width: 768px) {
-    .sidebar {
-      width: 100%;
-      height: auto;
-      position: static;
-      top: auto;
-      left: auto;
-    }
-  
-    .sidebar ul {
-      display: flex;
-      flex-wrap: wrap;
-    }
-  
-    .sidebar li {
-      flex: 1 1 50%; /* Deux éléments par ligne */
-    }
-  }
-  
+}
