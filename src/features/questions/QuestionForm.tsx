@@ -1,13 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addQuestion, updateQuestion } from './questionSlice';
-import { fetchQuizzes } from '../quizzers/quizSlice'; // Importer l'action pour charger les quizzes
-import { Button, Modal, Form } from 'react-bootstrap';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addQuestion, updateQuestion } from "./questionSlice";
+import { fetchQuizzes } from "../quizzers/quizSlice"; // Importer l'action pour charger les quizzes
+import { Button, Modal, Form } from "react-bootstrap";
 
-const QuestionForm = ({ show, handleClose, editMode = false, existingQuestion = null }) => {
-  const [content, setContent] = useState(existingQuestion ? existingQuestion.content : '');
-  const [quizId, setQuizId] = useState(existingQuestion ? existingQuestion.quiz_id : '');
-  const [choices, setChoices] = useState(existingQuestion ? existingQuestion.choices : []);
+const QuestionForm = ({
+  show,
+  handleClose,
+  editMode = false,
+  existingQuestion = null,
+}) => {
+  const [content, setContent] = useState(
+    existingQuestion ? existingQuestion.content : ""
+  );
+  const [quizId, setQuizId] = useState(
+    existingQuestion ? existingQuestion.quiz_id : ""
+  );
+  const [choices, setChoices] = useState(
+    existingQuestion ? existingQuestion.choices : []
+  );
   const dispatch = useDispatch();
 
   // Récupérer les quizzes depuis le Redux store
@@ -15,13 +26,13 @@ const QuestionForm = ({ show, handleClose, editMode = false, existingQuestion = 
   const quizStatus = useSelector((state) => state.quizzes.status);
 
   useEffect(() => {
-    if (quizStatus === 'idle') {
+    if (quizStatus === "idle") {
       dispatch(fetchQuizzes()); // Charger les quizzes si nécessaire
     }
   }, [quizStatus, dispatch]);
 
   const handleAddChoice = () => {
-    setChoices([...choices, { content: '', is_correct: false }]);
+    setChoices([...choices, { content: "", is_correct: false }]);
   };
 
   const handleChoiceChange = (index, field, value) => {
@@ -40,7 +51,7 @@ const QuestionForm = ({ show, handleClose, editMode = false, existingQuestion = 
     const questionData = { content, quiz_id: quizId, choices };
 
     console.log("Quiz ID:", quizId); // Loguez les valeurs pour déboguer
-  console.log("Question Data:", questionData);
+    console.log("Question Data:", questionData);
 
     if (editMode) {
       dispatch(updateQuestion({ id: existingQuestion.id, questionData }));
@@ -53,7 +64,7 @@ const QuestionForm = ({ show, handleClose, editMode = false, existingQuestion = 
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>{editMode ? 'Edit' : 'Add'} Question</Modal.Title>
+        <Modal.Title>{editMode ? "Edit" : "Add"} Question</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
@@ -93,7 +104,9 @@ const QuestionForm = ({ show, handleClose, editMode = false, existingQuestion = 
                   type="text"
                   placeholder={`Choice ${index + 1}`}
                   value={choice.content}
-                  onChange={(e) => handleChoiceChange(index, 'content', e.target.value)}
+                  onChange={(e) =>
+                    handleChoiceChange(index, "content", e.target.value)
+                  }
                   required
                   className="me-2"
                 />
@@ -101,15 +114,24 @@ const QuestionForm = ({ show, handleClose, editMode = false, existingQuestion = 
                   type="checkbox"
                   label="Correct"
                   checked={choice.is_correct}
-                  onChange={(e) => handleChoiceChange(index, 'is_correct', e.target.checked)}
+                  onChange={(e) =>
+                    handleChoiceChange(index, "is_correct", e.target.checked)
+                  }
                   className="me-2"
                 />
-                <Button variant="danger" onClick={() => handleDeleteChoice(index)}>
+                <Button
+                  variant="danger"
+                  onClick={() => handleDeleteChoice(index)}
+                >
                   Delete
                 </Button>
               </div>
             ))}
-            <Button variant="secondary" onClick={handleAddChoice} className="mt-2">
+            <Button
+              variant="secondary"
+              onClick={handleAddChoice}
+              className="mt-2"
+            >
               Add Choice
             </Button>
           </Form.Group>

@@ -1,0 +1,27 @@
+.Home {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  background-color: #800080;
+}
+
+.HomePage {
+  margin: auto;
+}
+
+.HomePage img {
+  border-radius: 100%;
+  margin-left: 30%;
+}
+
+.HomePage h1 {
+  color: white;
+  margin-top: 20px;
+}
+
+.HomePage button {
+  margin-top: 20px;
+  border-radius: 20px;
+  margin-left: 40%;
+}

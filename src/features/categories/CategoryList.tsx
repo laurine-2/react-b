@@ -15,11 +15,11 @@ const CategoryList = () => {
   const error = useSelector((state) => state.categories.error);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
-  // useEffect(() => {
-  //   if (status === "idle") {
-  //     dispatch(fetchCategories());
-  //   }
-  // }, [status, dispatch]);
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchCategories());
+    }
+  }, [status, dispatch]);
 
   const handleCategoryClick = (categoryId) => {
     setSelectedCategory(categoryId);

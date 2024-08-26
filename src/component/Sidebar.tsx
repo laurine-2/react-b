@@ -25,96 +25,96 @@ const Sidebar: React.FC = () => {
 
   return (
     <div className="sidebar">
-      {/* {user && user.role === 'user' && ( */}
-      <ul>
-        <li
-          style={{
-            padding: "10px",
-            backgroundColor: selectedItem === 1 ? "#0d3c6b" : "",
-          }}
-          onClick={() => setSelectedItem(1)}
-        >
-          <Link to="/categories">
-            <span className="icon">
-              <FaListAlt />
-            </span>
-            Catégories Quiz
-          </Link>
-        </li>
-        <li
-          style={{
-            padding: "10px",
-            backgroundColor: selectedItem === 2 ? "#0d3c6b" : "",
-          }}
-          onClick={() => setSelectedItem(2)}
-        >
-          <Link to="/quizzes">
-            <span className="icon">
-              <MdQuestionAnswer />
-            </span>
-            Réaliser un quiz
-          </Link>
-        </li>
-        <li
-          style={{
-            padding: "10px",
-            backgroundColor: selectedItem === 3 ? "#0d3c6b" : "",
-          }}
-          onClick={() => setSelectedItem(3)}
-        >
-          <Link to="/results">
-            <span className="icon">
-              <FaTasks />
-            </span>
-            Résultats des quiz
-          </Link>
-        </li>
-        <li
-          style={{
-            padding: "10px",
-            backgroundColor: selectedItem === 4 ? "#0d3c6b" : "",
-          }}
-          onClick={() => setSelectedItem(4)}
-        >
-          <Link to="#">
-            <span className="icon">
-              <GiTeacher />
-            </span>
-            Comparer ses résultats
-          </Link>
-        </li>
+      {user && user.role === "user" && (
+        <ul>
+          <li
+            style={{
+              padding: "10px",
+              backgroundColor: selectedItem === 1 ? "#0d3c6b" : "",
+            }}
+            onClick={() => setSelectedItem(1)}
+          >
+            <Link to="/categories">
+              <span className="icon">
+                <FaListAlt />
+              </span>
+              Catégories Quiz
+            </Link>
+          </li>
+          <li
+            style={{
+              padding: "10px",
+              backgroundColor: selectedItem === 2 ? "#0d3c6b" : "",
+            }}
+            onClick={() => setSelectedItem(2)}
+          >
+            <Link to="/quizzes">
+              <span className="icon">
+                <MdQuestionAnswer />
+              </span>
+              Réaliser un quiz
+            </Link>
+          </li>
+          <li
+            style={{
+              padding: "10px",
+              backgroundColor: selectedItem === 3 ? "#0d3c6b" : "",
+            }}
+            onClick={() => setSelectedItem(3)}
+          >
+            <Link to="/results">
+              <span className="icon">
+                <FaTasks />
+              </span>
+              Résultats des quiz
+            </Link>
+          </li>
+          <li
+            style={{
+              padding: "10px",
+              backgroundColor: selectedItem === 4 ? "#0d3c6b" : "",
+            }}
+            onClick={() => setSelectedItem(4)}
+          >
+            <Link to="#">
+              <span className="icon">
+                <GiTeacher />
+              </span>
+              Comparer ses résultats
+            </Link>
+          </li>
 
-        <li
-          style={{
-            padding: "10px",
-            backgroundColor: selectedItem === 5 ? "#0d3c6b" : "",
-          }}
-          onClick={() => setSelectedItem(5)}
-        >
-          <Link to="/profil">
-            <span className="icon">
-              <FaUsers />
-            </span>
-            profil
-          </Link>
-        </li>
+          <li
+            style={{
+              padding: "10px",
+              backgroundColor: selectedItem === 5 ? "#0d3c6b" : "",
+            }}
+            onClick={() => setSelectedItem(5)}
+          >
+            <Link to="/profil">
+              <span className="icon">
+                <FaUsers />
+              </span>
+              profil
+            </Link>
+          </li>
 
-        <li
-          style={{
-            padding: "10px",
-            backgroundColor: selectedItem === 6 ? "#0d3c6b" : "",
-          }}
-          onClick={() => setSelectedItem(6)}
-        >
-          <Link to="/profil">
-            <span className="icon">
-              <IoIosSettings />
-            </span>
-            Paramètres
-          </Link>
-        </li>
-      </ul>
-      {/* )} */}
+          <li
+            style={{
+              padding: "10px",
+              backgroundColor: selectedItem === 6 ? "#0d3c6b" : "",
+            }}
+            onClick={() => setSelectedItem(6)}
+          >
+            <Link to="/profil">
+              <span className="icon">
+                <IoIosSettings />
+              </span>
+              Paramètres
+            </Link>
+          </li>
+        </ul>
+      )}
       {user && user.role === "manager" && (
         <ul>
           <li>
@@ -144,7 +144,7 @@ const Sidebar: React.FC = () => {
                   <li>
                     <Link to="/quizzes/list">Quiz List</Link>
                   </li>
-                  {/* <li><Link to="/quizzes/create">Create Quiz</Link></li> */}
+                  <li><Link to="/quizzes/create">Create Quiz</Link></li>
                 </ul>
               </div>
             )}

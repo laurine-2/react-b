@@ -1,5 +1,5 @@
 .dashboard {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   display: flex;
   height: 90vh;
   overflow: hidden;
@@ -8,7 +8,39 @@
   left: 250px;
   bottom: 0px;
   width: 83.5%;
-  padding: 20px
+  padding: 20px;
+  /* display: flex;
+  justify-content: center; */
+}
+
+.dashboard .profil {
+  width: 50%;
+  margin: auto;
+  box-shadow: 1px 0px 5px 0px black;
+  height: 80vh;
+  border-radius: 10px;
+}
+
+.dashboard .profil .form-label {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  margin-left: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.dashboard .profil .form-control {
+  margin-left: 20px;
+  width: 94%;
+}
+
+.dashboard .profil .send {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.dashboard .profil .send .boutonSend {
+  width: 94%;
 }
 
 .dashboard-container {

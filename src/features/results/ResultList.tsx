@@ -11,18 +11,30 @@ const ResultList = () => {
   const status = useSelector((state) => state.results.status); // Statut du chargement
   const error = useSelector((state) => state.results.error); // Erreurs éventuelles
 
-  // useEffect(() => {
-  //   dispatch(fetchResults());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchResults());
+  }, [dispatch]);
 
   console.log("Results:", results);
 
   if (status === "loading") {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <Header />
+        <Sidebar />
+        <div className="dashboard">Loading...</div>
+      </div>
+    );
   }
 
   if (status === "failed") {
-    return <div>Error: {error}</div>;
+    return (
+      <div>
+        <Header />
+        <Sidebar />
+        <div className="dashboard">Error: {error}</div>;
+      </div>
+    );
   }
 
   return (

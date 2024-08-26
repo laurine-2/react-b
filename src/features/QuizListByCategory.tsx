@@ -12,9 +12,9 @@ const QuizListByCategory = () => {
   const status = useSelector((state) => state.quizzes.status);
   const error = useSelector((state) => state.quizzes.error);
 
-  // useEffect(() => {
-  //   dispatch(fetchQuizzesByCategory(categoryId));
-  // }, [dispatch, categoryId]);
+  useEffect(() => {
+    dispatch(fetchQuizzesByCategory(categoryId));
+  }, [dispatch, categoryId]);
 
   if (status === "loading") {
     return <div>Loading...</div>;
