@@ -3,18 +3,21 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchQuizzes, deleteQuiz } from './quizSlice';
 import { Table, Button, Modal } from 'react-bootstrap';
 import QuizForm from './QuizForm';
+import { RootState, AppDispatch } from '../../store';
+import { Quiz } from '../types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 
-const QuizList = () => {
-  const dispatch = useDispatch();
-  const quizzes = useSelector((state) => state.quizzes.quizzes);
-  const status = useSelector((state) => state.quizzes.status);
-  const error = useSelector((state) => state.quizzes.error);
+const QuizList: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const quizzes = useSelector((state: RootState) => state.quizzes.quizzes);
+  const status = useSelector((state: RootState) => state.quizzes.status);
+  const error = useSelector((state: RootState) => state.quizzes.error);
 
   const [showModal, setShowModal] = useState(false);
   const [showViewModal, setShowViewModal] = useState(false);
-  const [selectedQuiz, setSelectedQuiz] = useState(null);
+  const [selectedQuiz, setSelectedQuiz] = useState<Quiz | null>(null);
 
   useEffect(() => {
     if (status === 'idle') {
@@ -22,7 +25,7 @@ const QuizList = () => {
     }
   }, [status, dispatch]);
 
-  const handleShowModal = (quiz) => {
+  const handleShowModal = (quiz: Quiz | null) => {
     setSelectedQuiz(quiz);
     setShowModal(true);
   };
@@ -32,7 +35,7 @@ const QuizList = () => {
     setSelectedQuiz(null);
   };
 
-  const handleViewQuiz = (quiz) => {
+  const handleViewQuiz = (quiz: Quiz) => {
     setSelectedQuiz(quiz);
     setShowViewModal(true);
   };
@@ -42,16 +45,9 @@ const QuizList = () => {
     setSelectedQuiz(null);
   };
 
-  const handleDeleteQuiz = (quizId) => {
+  const handleDeleteQuiz = (quizId: number) => {
     if (window.confirm('Are you sure you want to delete this quiz?')) {
-      dispatch(deleteQuiz(quizId))
-        .unwrap()
-        .then(() => {
-          console.log('Quiz deleted successfully');
-        })
-        .catch((error) => {
-          console.error('Failed to delete quiz:', error);
-        });
+      dispatch(deleteQuiz(quizId));
     }
   };
 
@@ -71,40 +67,43 @@ const QuizList = () => {
 
       <QuizForm show={showModal} handleClose={handleCloseModal} quiz={selectedQuiz} />
 
-      <Table striped bordered hover className="mt-3">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Category ID</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {quizzes.map((quiz) => (
-            <tr key={quiz.id}>
-              <td>{quiz.id}</td>
-              <td>{quiz.title}</td>
-              <td>{quiz.description}</td>
-              <td>{quiz.category_id}</td>
-              <td>
-                <Button variant="info" className="me-2" onClick={() => handleViewQuiz(quiz)}>
-                  <FontAwesomeIcon icon={faEye} />
-                </Button>
-                <Button variant="warning" className="me-2" onClick={() => handleShowModal(quiz)}>
-                  <FontAwesomeIcon icon={faEdit} />
-                </Button>
-                <Button variant="danger" onClick={() => handleDeleteQuiz(quiz.id)}>
-                  <FontAwesomeIcon icon={faTrash} />
-                </Button>
-              </td>
+      {quizzes && quizzes.length > 0 ? (
+        <Table striped bordered hover className="mt-3">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Category ID</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {quizzes.map((quiz) => (
+              <tr key={quiz.id}>
+                <td>{quiz.id}</td>
+                <td>{quiz.title}</td>
+                <td>{quiz.description}</td>
+                <td>{quiz.category_id}</td>
+                <td>
+                  <Button variant="info" className="me-2" onClick={() => handleViewQuiz(quiz)}>
+                    <FontAwesomeIcon icon={faEye} />
+                  </Button>
+                  <Button variant="warning" className="me-2" onClick={() => handleShowModal(quiz)}>
+                    <FontAwesomeIcon icon={faEdit} />
+                  </Button>
+                  <Button variant="danger" onClick={() => handleDeleteQuiz(quiz.id)}>
+                    <FontAwesomeIcon icon={faTrash} />
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      ) : (
+        <div>No quizzes available</div>
+      )}
 
-      {/* Modal pour afficher les détails du quiz */}
       <Modal show={showViewModal} onHide={handleCloseViewModal}>
         <Modal.Header closeButton>
           <Modal.Title>Quiz Details</Modal.Title>

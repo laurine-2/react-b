@@ -4,29 +4,36 @@ import { fetchQuizById } from './quizSlice';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import axiosInstance from '../../api/axios'; // Importez votre instance axios
+import { RootState, AppDispatch } from '../../store';
+import { Quiz, User } from '../types'; // Importez vos types
 
-const TakeQuiz = () => {
-  const { quizId } = useParams();
-  const dispatch = useDispatch();
+const TakeQuiz: React.FC = () => {
+  const { quizId } = useParams<{ quizId: string }>();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.auth.user);
-  const quiz = useSelector((state) => state.quizzes.selectedQuiz);
+  const user = useSelector((state: RootState) => state.auth.user) as User | null;
+  const quiz = useSelector((state: RootState) => state.quizzes.selectedQuiz) as Quiz | null;
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const [answers, setAnswers] = useState([]); // Stocke toutes les réponses
+  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+  const [answers, setAnswers] = useState<Array<{ question_id: number; choice_id: number }>>([]);
 
   useEffect(() => {
-    dispatch(fetchQuizById(quizId));
+    if (quizId) {
+      dispatch(fetchQuizById(Number(quizId)));
+    }
   }, [dispatch, quizId]);
 
-  if (!quiz || quiz.length === 0) {
+  console.log(quiz);
+
+  // Vérifier si le quiz est en train de charger ou si les questions sont undefined
+  if (!quiz || !quiz.questions || quiz.questions.length === 0) {
     return <div>Loading...</div>;
   }
 
   const handleAnswerSubmit = () => {
-    const currentQuestion = quiz[currentQuestionIndex];
+    const currentQuestion = quiz.questions[currentQuestionIndex];
 
-    if (!selectedAnswer) {
+    if (selectedAnswer === null) {
       console.error("No answer selected");
       return;
     }
@@ -36,7 +43,6 @@ const TakeQuiz = () => {
       return;
     }
 
-    // Ajoutez la réponse à la liste des réponses
     setAnswers((prevAnswers) => [
       ...prevAnswers,
       {
@@ -45,11 +51,10 @@ const TakeQuiz = () => {
       },
     ]);
 
-    if (currentQuestionIndex < quiz.length - 1) {
+    if (currentQuestionIndex < quiz.questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setSelectedAnswer(null);
     } else {
-      // Soumettez toutes les réponses à la fin du quiz
       axiosInstance.post(`/quizzes/${quizId}/submit`, { answers })
         .then(response => {
           console.log('Quiz submitted successfully:', response.data);
@@ -61,7 +66,7 @@ const TakeQuiz = () => {
     }
   };
 
-  const currentQuestion = quiz[currentQuestionIndex];
+  const currentQuestion = quiz.questions[currentQuestionIndex];
 
   return (
     <div className="container mt-5">
@@ -79,7 +84,7 @@ const TakeQuiz = () => {
         ))}
       </Form>
       <Button variant="primary" className="mt-3" onClick={handleAnswerSubmit}>
-        {currentQuestionIndex < quiz.length - 1 ? 'Suivant' : 'Soumettre'}
+        {currentQuestionIndex < quiz.questions.length - 1 ? 'Next' : 'Submit'}
       </Button>
     </div>
   );

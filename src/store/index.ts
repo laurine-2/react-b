@@ -5,6 +5,8 @@ import quizReducer from '../features/quizzers/quizSlice';
 import questionReducer from '../features/questions/questionSlice';
 import resultReducer from '../features/results/resultSlice';
 import userAnswerReducer from '../features/userAnswer/userAnswerSlice';
+import teamReducer from '../features/teams/teamSlice';
+import userReducer  from '../features/users/userSlice';
 
 const store = configureStore({
   reducer: {
@@ -14,6 +16,9 @@ const store = configureStore({
     questions: questionReducer,
     results: resultReducer,
     userAnswer: userAnswerReducer,
+    teams: teamReducer,
+    users: userReducer,
+    
   },
 });
 
