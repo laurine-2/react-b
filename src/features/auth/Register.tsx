@@ -4,6 +4,7 @@ import { registerUser } from '../../features/auth/authSlice';
 import { fetchTeams } from '../../features/teams/teamSlice';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../../store';
+import logo from "../../assets/image/logo2.jpeg";
 
 const Register: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -61,59 +62,93 @@ const Register: React.FC = () => {
   };
   
   return (
-    <div>
-      <h2>Register</h2>
+    <div className="connect">
+    <div className="contained signup">
+      <h2><img src={logo} alt="" /></h2>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="element">
           <label>First Name:</label>
-          <input type="text" name="firstname" onChange={handleChange} required />
+          <input
+            placeholder="First Name"
+            type="text"
+            name="firstname"
+            onChange={handleChange}
+            required
+          />
         </div>
-        <div>
+        <div className="element">
           <label>Last Name:</label>
-          <input type="text" name="lastname" onChange={handleChange} required />
+          <input
+            placeholder="Last Name"
+            type="text"
+            name="lastname"
+            onChange={handleChange}
+            required
+          />
         </div>
-        <div>
+        <div className="element">
           <label>Matricule:</label>
-          <input type="text" name="matricule" onChange={handleChange} required />
+          <input
+            placeholder="Matricule"
+            type="text"
+            name="matricule"
+            onChange={handleChange}
+            required
+          />
         </div>
-        <div>
+        <div className="element">
           <label>Email:</label>
-          <input type="email" name="email" onChange={handleChange} required />
+          <input
+            type="email"
+            name="email"
+            onChange={handleChange}
+            required
+            placeholder="email"
+          />
         </div>
-        <div>
+        <div className="element">
           <label>Password:</label>
-          <input type="password" name="password" onChange={handleChange} required />
+          <input
+            placeholder="Password"
+            type="password"
+            name="password"
+            onChange={handleChange}
+            required
+          />
         </div>
-        <div>
+        <div className="element">
           <label>Confirm Password:</label>
-          <input type="password" name="confirmPassword" onChange={handleChange} required />
+          <input
+            placeholder="Confirm Password"
+            type="password"
+            name="confirmPassword"
+            onChange={handleChange}
+            required
+          />
         </div>
         {!passwordsMatch && <p>Passwords do not match</p>}
-        
-        {/* Sélection de l'équipe */}
-        <div>
-          <label>Team:</label>
-          <select name="team_id" onChange={handleChange} required>
-            <option value="">Select a team</option>
-            {teams.map((team) => (
-              <option key={team.id} value={team.id}>
-                {team.name}
-              </option>
-            ))}
+        <div className="element">
+          <label>Role:</label>
+          <select name="role" onChange={handleChange} required>
+            <option value="user">User</option>
+            <option value="manager">Manager</option>
+            <option value="admin">Admin</option>
           </select>
         </div>
-        
         <button type="submit" disabled={loading || !passwordsMatch}>
-          {loading ? 'Loading...' : 'Register'}
+          {loading ? "Loading..." : "Register"}
         </button>
         {error && <p>{error}</p>}
       </form>
-      <div>
-        <h3>Already have an account?</h3>
-        <button onClick={() => navigate('/login')}>Login</button>
+      <div className="lien">
+        <span className="goConnect">
+          are you have the acounte!{" "}
+          <p onClick={() => navigate("/login")}> Login</p>
+        </span>
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default Register;

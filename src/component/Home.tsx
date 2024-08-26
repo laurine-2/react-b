@@ -1,7 +1,7 @@
 import React from 'react'
 import logo2 from "../assets/image/logo2.jpeg"
 import { useNavigate } from 'react-router-dom';
-import '../App.css'
+import '../App.css';
 
 const Home: React.FC= ()=>{
     const navigate = useNavigate();
